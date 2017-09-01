@@ -1,6 +1,6 @@
-Packer Example1 {
-    Source 'C:\code\PackerDsl\Json'
-    Destination 'C:\code\PackerDsl'
+PackerFile Example1 {
+    Source 'C:\code\PackerFile\Json'
+    Destination 'C:\code'
     Builders {
         Builder vboxM8C2
     }
