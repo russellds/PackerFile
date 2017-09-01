@@ -1,0 +1,5 @@
+{
+    "type": "file",
+    "source": "software/",
+    "destination": "C:/tmp"
+}

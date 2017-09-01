@@ -1,0 +1,6 @@
+{
+    "type": "powershell",
+    "inline": [
+      "md C:/tmp"
+    ]
+}

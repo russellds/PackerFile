@@ -1,0 +1,55 @@
+{
+    "type": "virtualbox-iso",
+    "vboxmanage": [
+      [
+        "modifyvm",
+        "{{.Name}}",
+        "--memory",
+        "8192"
+      ],
+      [
+        "modifyvm",
+        "{{.Name}}",
+        "--vram",
+        "48"
+      ],
+      [
+        "modifyvm",
+        "{{.Name}}",
+        "--cpus",
+        "2"
+      ],
+      [
+        "modifyvm",
+        "{{.Name}}",
+        "--clipboard",
+        "bidirectional"
+      ],
+      [
+        "modifyvm",
+        "{{.Name}}",
+        "--draganddrop",
+        "bidirectional"
+      ]
+    ],
+    "output_directory": "./output/{{ user `os_name` }}-win-base/",
+    "vm_name": "{{ user `os_name` }}-base",
+    "guest_additions_mode": "attach",
+    "guest_os_type": "{{ user `guest_os_type` }}",
+    "headless": "{{ user `headless` }}",
+    "iso_url": "{{ user `iso_url` }}",
+    "iso_checksum": "{{ user `iso_checksum` }}",
+    "iso_checksum_type": "{{ user `iso_checksum_type` }}",
+    "communicator": "winrm",
+    "winrm_username": "vagrant",
+    "winrm_password": "vagrant",
+    "winrm_timeout": "12h",
+    "shutdown_command": "shutdown /s /t 10 /f /d p:4:1 /c \"Packer Shutdown\"",
+    "shutdown_timeout": "1h",
+    "floppy_files": [
+      "answer_files/{{ user `os_name` }}/Autounattend.xml",
+      "floppy/winrm.ps1"
+    ],
+    "vrdp_port_min": "5901",
+    "vrdp_port_max": "5901"
+}
