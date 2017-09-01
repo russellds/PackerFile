@@ -1,6 +1,7 @@
 ﻿param(
     $Task = 'Default',
     [switch]$Local,
+    [switch]$Deploy,
     [switch]$Force
 )
 # Get Powershell Host Version
@@ -19,6 +20,10 @@ Set-BuildEnvironment -Force:$Force
 
 if ($Local) {
     $env:BHBuildSystem = 'Local'
+}
+
+if ($Deploy) {
+    $env:BHCommitMessage = '!deploy'
 }
 
 Invoke-psake $PSScriptRoot\psake.ps1 -taskList $Task -nologo
