@@ -1,10 +1,17 @@
 function PackerFile {
-    [CmdletBinding()]
+    [CmdletBinding( DefaultParameterSetName = 'NoName' )]
     param(
-        [Parameter( Mandatory = $true)]
+        [Parameter( ParameterSetName = 'Name',
+                    Position = 0,
+                    Mandatory = $true )]
         [string]$Name,
 
-        [Parameter( Mandatory = $true)]
+        [Parameter( ParameterSetName = 'Name',
+                    Position =1,
+                    Mandatory = $true )]
+        [Parameter( ParameterSetName = 'NoName',
+                    Position = 0,
+                    Mandatory = $true )]
         [scriptblock]$Script
     )
     $Script:ThisPackerInfo = [pscustomobject]@{
@@ -22,6 +29,8 @@ function PackerFile {
 
     . $Script
 
-    $Script:ThisPackerFile |
-        Out-JsonFile -Path $Script:ThisPackerInfo.Destination -FileName $Script:ThisPackerInfo.JsonBaseName
+    if ($PSCmdlet.ParameterSetName -eq 'Name') {
+        $Script:ThisPackerFile |
+            Out-JsonFile -Path $Script:ThisPackerInfo.Destination -FileName $Script:ThisPackerInfo.JsonBaseName
+    }
 }

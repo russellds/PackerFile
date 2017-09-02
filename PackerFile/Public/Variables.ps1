@@ -1,18 +1,36 @@
 function Variables {
     [cmdletbinding( DefaultParameterSetName = 'NoName' )]
     param(
-        [parameter( ParameterSetName = 'Name',
+        [Parameter( ParameterSetName = 'Name',
                     Position = 0,
                     Mandatory = $true)]
+        [Parameter( ParameterSetName = 'Snippet',
+                    Position = 0,
+                    Mandatory = $true )]
         [string]$Name,
 
-        [parameter( ParameterSetName = 'NoName',
+        [Parameter( ParameterSetName = 'Snippet',
+                    Position = 1,
+                    Mandatory = $true)]
+        [ValidateSet( 'Snippet' )]
+        [string]$Snippet,
+
+        [Parameter( ParameterSetName = 'Snippet',
+                    Position = 2,
+                    Mandatory = $true )]
+        [Parameter( ParameterSetName = 'NoName',
                     Position = 0,
                     Mandatory = $true )]
         [System.Collections.Hashtable]$Variables
     )
     if ($PSCmdlet.ParameterSetName -eq 'NoName') {
         $Script:ThisPackerFile.variables = $Variables
+    }
+    elseif ($PSCmdlet.ParameterSetName -eq 'Snippet') {
+        $fileName = "$Name.json"
+
+        [pscustomobject]$Variables |
+            Out-JsonFile -Path $Script:ThisPackerInfo.Destination -FileName $fileName
     }
     else {
         try {
