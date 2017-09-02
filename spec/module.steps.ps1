@@ -6,14 +6,12 @@ Given 'we have script files' {
 }
 
 Then 'the script files should be valid Powershell' {
-    $errorCounter = 0
     foreach ($script in $scripts) {
         $contents = Get-Content -Path $script.FullName -ErrorAction Stop
         $errors = $null
         $null = [System.Management.Automation.PSParser]::Tokenize($contents, [ref]$errors)
-        $errorCounter += $errors.Count
+        $errors.Count | Should Be 0
     }
-    $errorCounter | Should Be 0
 }
 
 And 'the module should import cleanly' {  

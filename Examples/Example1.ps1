@@ -12,12 +12,12 @@ PackerFile Example1 {
         PostProcessor vagrant
     }
     Variables @{
-       os_name = ''
-      headless = 'true'
-      iso_checksum = ''
-      iso_checksum_type = ''
-      iso_url = ''
-      guest_os_type = ''
-      install_vbox_tools = ''
+        os_name = ''
+        headless = 'true'
+        iso_checksum = ''
+        iso_checksum_type = ''
+        iso_url = ''
+        guest_os_type = ''
+        install_vbox_tools = ''
     }
 }
