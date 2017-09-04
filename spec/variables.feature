@@ -1,12 +1,12 @@
-Feature: Packer File variables
+Feature: Packer File Variables
     As a Packer File Author
-    I should be able to create variables with a hashtable
-    And I should be able to create variables with a JSON snippet
-    And I should be able to create a variables JSON snippet file
+    I should be able to create Variables with a hashtable
+    And I should be able to create Variables with a JSON snippet
+    And I should be able to create a Variables JSON snippet file
 
 Background: Create a Variables JSON snippet
-    Given we have a source folder
-    And we have a source variables JSON snippet
+    Given we have a Variables source folder
+    And we have a source Variables JSON snippet
         """
         {
             "os_name":  "win2012r2",
@@ -19,9 +19,9 @@ Background: Create a Variables JSON snippet
         }
         """
 
-Scenario: I should be able to create variables with a hashtable
-    Given we have a destination folder
-    When we create a packer file with a variables hashtable
+Scenario: I should be able to create Variables with a hashtable
+    Given we have a packer file destination folder
+    When we create a packer file with a Variables hashtable
         """
         os_name = win2012r2
         headless = true
@@ -32,8 +32,8 @@ Scenario: I should be able to create variables with a hashtable
         install_vbox_tools = true
         """
     Then the packer file should exist
-    And the packer file should have a variables section
-    And the property should equal the value
+    And the packer file should have a Variables section
+    And the packer file Variables section properties should equal the values
     | property              | value                                                                                                                                                                                     |
     | os_name               | win2012r2                                                                                                                                                                                 |
     | headless              | true                                                                                                                                                                                      |
@@ -43,12 +43,12 @@ Scenario: I should be able to create variables with a hashtable
     | guest_os_type         | Windows2012_64                                                                                                                                                                            |
     | install_vbox_tools    | true                                                                                                                                                                                      |
 
-Scenario: I should be able to create variables with a JSON snippet
-    Given we have a destination folder
-    When we create a packer file with a variables JSON snippet
+Scenario: I should be able to create Variables with a JSON snippet
+    Given we have a packer file destination folder
+    When we create a packer file with a Variables JSON snippet
     Then the packer file should exist
-    And the packer file should have a variables section
-    And the property should equal the value
+    And the packer file should have a Variables section
+    And the packer file Variables section properties should equal the values
     | property              | value                                                                                                                                                                                     |
     | os_name               | win2012r2                                                                                                                                                                                 |
     | headless              | true                                                                                                                                                                                      |
@@ -58,9 +58,9 @@ Scenario: I should be able to create variables with a JSON snippet
     | guest_os_type         | Windows2012_64                                                                                                                                                                            |
     | install_vbox_tools    | true                                                                                                                                                                                      |
 
-Scenario: I should be able to create a variables JSON snippet file
-    Given we have a snippet destination folder
-    When we create a variables JSON snippet file
+Scenario: I should be able to create a Variables JSON snippet file
+    Given we have a Variables snippet destination folder
+    When we create a Variables JSON snippet file
         """
         os_name = win2012r2
         headless = true
@@ -70,7 +70,7 @@ Scenario: I should be able to create a variables JSON snippet file
         guest_os_type = Windows2012_64
         install_vbox_tools = true
         """
-    Then the snippet property should equal the value
+    Then the Variables snippet properties should equal the values
     | property              | value                                                                                                                                                                                     |
     | os_name               | win2012r2                                                                                                                                                                                 |
     | headless              | true                                                                                                                                                                                      |
