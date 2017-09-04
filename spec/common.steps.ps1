@@ -18,22 +18,20 @@ AfterEachFeature {
 }
 
 
-Given 'we have a (?<Name>\S*|(\S+)\s+(\S+)) source folder' {
+Given 'we have a (?<Name>\S*) source folder' {
     param(
         $Name
     )
-    $Name = $Name -replace '\s', ''
 
     [void](New-Item -Path "testdrive:\JsonSnippets\$Name" -ItemType Directory -ErrorAction SilentlyContinue)
     "testdrive:\JsonSnippets\$Name" | Should Exist
 }
 
-And 'we have a source (?<Name>\S*|(\S+)\s+(\S+)) JSON snippet' {
+And 'we have a source (?<Name>\S*) JSON snippet' {
     param(
         $Name,    
         $Data
     )
-    $Name = $Name -replace '\s', ''
 
     $filePath = "testdrive:\JsonSnippets\$Name\$($Name)Snippet.json"
 
@@ -41,62 +39,76 @@ And 'we have a source (?<Name>\S*|(\S+)\s+(\S+)) JSON snippet' {
         Out-File -FilePath $filePath
     
     $filePath | Should Exist
-
-    Write-Host $filePath
 }
 
-Given 'we have a packer file destination folder' {
-    mkdir testdrive:\packer -ErrorAction SilentlyContinue
-    'testdrive:\packer' | Should Exist
+Given 'we have a (?<Name>\S*) packer file destination folder' {
+    param(
+        $Name
+    )
+
+    [void](New-Item -Path "testdrive:\packer\$Name" -ItemType Directory -ErrorAction SilentlyContinue)
+    "testdrive:\packer\$Name" | Should Exist
 }
 
-Then 'the packer file should exist' {
-    'testdrive:\packer\testPacker.json' | Should Exist
+Then 'the (?<Name>\S*) packer file should exist' {
+    param(
+        $Name
+    )
+
+    "testdrive:\packer\$Name\testPacker.json" | Should Exist
 }
 
-And 'the packer file should have a (?<Name>\S*|(\S+)\s+(\S+)) section' {
+And 'the packer file should have a (?<Name>\S*) section' {
     param(
         [string]$Name
     )
-    $Name = $Name.ToLower().Trim() -replace ' ', '-'
+    if ($Name -eq 'PostProcessors') {
+        $property = 'post-processors'
+    }
+    else {
+        $property = $Name.ToLower().Trim()
+    }
 
-    $packerFile = Get-Content -Path 'testdrive:\packer\testPacker.json' -Raw |
+    $packerFile = Get-Content -Path "testdrive:\packer\$Name\testPacker.json" -Raw |
         ConvertFrom-Json
 
-    $packerFile."$Name" | Should Not Be Null
+    $packerFile."$property" | Should Not Be Null
 }
 
-And 'the packer file (?<Name>\S*|(\S+)\s+(\S+)) section properties should equal the values' {
+And 'the packer file (?<Name>\S*) section properties should equal the values' {
     param(
         $Name,
         $Table
     )
-    $Name = $Name.ToLower().Trim() -replace ' ', '-'
+    if ($Name -eq 'PostProcessors') {
+        $property = 'post-processors'
+    }
+    else {
+        $property = $Name.ToLower().Trim()
+    }
 
-    $packerFile = Get-Content -Path 'testdrive:\packer\testPacker.json' -Raw |
-    ConvertFrom-Json
+    $packerFile = Get-Content -Path "testdrive:\packer\$Name\testPacker.json" -Raw |
+        ConvertFrom-Json
 
     foreach ($row in $Table) {
-        $packerFile."$Name"."$($row.property)" | Should Be $row.value
+        $packerFile."$property"."$($row.property)" | Should Be $row.value
     }
 }
 
-Given 'we have a (?<Name>\S*|(\S+)\s+(\S+)) snippet destination folder' {
+Given 'we have a (?<Name>\S*) snippet destination folder' {
     param(
         $Name
     )
-    $Name = $Name -replace '\s', ''
 
     [void](New-Item -Path "testdrive:\JsonSnippets\$Name" -ItemType Directory -ErrorAction SilentlyContinue)
     "testdrive:\JsonSnippets\$Name" | Should Exist
 }
 
-Then 'the (?<Name>\S*|(\S+)\s+(\S+)) snippet properties should equal the values' {
+Then 'the (?<Name>\S*) snippet properties should equal the values' {
     param(
         $Name,
         $Table
     )
-    $Name = $Name -replace '\s', ''
     
     $snippetFile = Get-Content -Path "testdrive:\JsonSnippets\$Name\Create$($Name)Snippet.json" -Raw |
     ConvertFrom-Json

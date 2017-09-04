@@ -20,8 +20,8 @@ Background: Create a Variables JSON snippet
         """
 
 Scenario: I should be able to create Variables with a hashtable
-    Given we have a packer file destination folder
-    When we create a packer file with a Variables hashtable
+    Given we have a Variables packer file destination folder
+    When we create a Variables packer file with a Variables hashtable
         """
         os_name = win2012r2
         headless = true
@@ -31,7 +31,7 @@ Scenario: I should be able to create Variables with a hashtable
         guest_os_type = Windows2012_64
         install_vbox_tools = true
         """
-    Then the packer file should exist
+    Then the Variables packer file should exist
     And the packer file should have a Variables section
     And the packer file Variables section properties should equal the values
     | property              | value                                                                                                                                                                                     |
@@ -44,9 +44,9 @@ Scenario: I should be able to create Variables with a hashtable
     | install_vbox_tools    | true                                                                                                                                                                                      |
 
 Scenario: I should be able to create Variables with a JSON snippet
-    Given we have a packer file destination folder
-    When we create a packer file with a Variables JSON snippet
-    Then the packer file should exist
+    Given we have a Variables packer file destination folder
+    When we create a Variables packer file with a Variables JSON snippet
+    Then the Variables packer file should exist
     And the packer file should have a Variables section
     And the packer file Variables section properties should equal the values
     | property              | value                                                                                                                                                                                     |

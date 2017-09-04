@@ -1,0 +1,6 @@
+{
+    "type": "vagrant",
+    "keep_input_artifact": false,
+    "output": "./output/box/{{.Provider}}-{{user `os_name`}}-base.box",
+    "vagrantfile_template": "./vagrantfile/vagrantfile-windows.template"
+}
